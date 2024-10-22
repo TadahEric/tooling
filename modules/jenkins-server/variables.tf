@@ -13,11 +13,15 @@ variable "instance_type" {
 variable "key_name" {
   description = "The key name for the Jenkins server"
   type        = string
-  default     = "DevOps_Train2024"
+  default     = "training36"
 }
 
 variable "main-region" {
   description = "The AWS region to deploy resources"
   type        = string
   default     = "us-west-2"
+}
+variable "security_group_id" {
+  type = list("")
+  default = ["sg-08832623feec1c320"]
 }
