@@ -12,9 +12,9 @@ variable "instance_type" {
 
 
 variable "key_name" {
-  description = "The key name for the instances"
+  description = "The key name for the Jenkins server"
   type        = string
-  default     = "DevOps_Train2024"
+  default     = "training36"
 }
 
 ###########################
@@ -23,6 +23,24 @@ variable "key_name" {
 variable "security_group_id" {
   type    = string
   default = "sg-07b8b3043804ede33"
+}
+variable "db_name" {
+  description = "The name of the PostgreSQL database"
+  type        = string
+  default = "ddsonarqube"
+}
+
+variable "db_username" {
+  description = "The username for the PostgreSQL database"
+  type        = string
+  default = "ddsonar"
+}
+
+variable "db_password" {
+  description = "The password for the PostgreSQL database"
+  type        = string
+  sensitive   = true
+  default = "Team@123"
 }
 
 # variable "subnet_id" {
@@ -44,24 +62,6 @@ variable "subnet_id" {
   default     = "subnet-0ea3d234fba84eef9"
 }
 
-# variable "db_name" {
-#   description = "The name of the PostgreSQL database"
-#   type        = string
-#   default     = "sonarqube"
-# }
-
-# variable "db_username" {
-#   description = "The username for the PostgreSQL database"
-#   type        = string
-#   default     = "sonar"
-# }
-
-# variable "db_password" {
-#   description = "The password for the PostgreSQL database"
-#   type        = string
-#   sensitive   = true
-#   default     = "Team@123"
-# }
 
 # variable "db_security_group_id" {
 #   description = "The security group ID for the PostgreSQL database"
@@ -74,7 +74,17 @@ variable "subnet_id" {
 #   type        = string
 #   default     = "default-vpc-08dcf780b5e752f2c"
 # }
+variable "db_security_group_id" {
+  description = "The security group ID for the PostgreSQL database"
+  type    = list(string)
+  default = ["sg-08832623feec1c320"]
+}
 
+variable "db_subnet_group_name" {
+  description = "The subnet group for the PostgreSQL database"
+  type        = string
+  default = "db_subnet_group"
+}
 variable "s3_bucket" {
   description = "The name of the S3 bucket for storing Terraform state"
   type        = string
