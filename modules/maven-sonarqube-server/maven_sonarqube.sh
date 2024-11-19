@@ -42,14 +42,13 @@ echo "Verifying Maven installation..."
 # Download and install SonarQube 10.5.1.90531
 # Install Maven 3.9.6
 # Download and install SonarQube 10.5.1.90531
-SONARQUBE_VERSION=10.5.1.90531
+SONARQUBE_VERSION=10.7.0.96327
 sudo apt install unzip -y
 wget https://binaries.sonarsource.com/Distribution/sonarqube/sonarqube-${SONARQUBE_VERSION}.zip
 if [ $? -ne 0 ]; then
     echo "Failed to download SonarQube. Exiting."
     exit 1
 fi
-
 unzip -o sonarqube-${SONARQUBE_VERSION}.zip -d /opt
 sudo mv /opt/sonarqube-${SONARQUBE_VERSION} /opt/sonarqube
 
@@ -111,6 +110,13 @@ Exit
 # sonar.jdbc.url=jdbc:postgresql://localhost:5432/ddsonarqube
 # EOF"
 
+# i) Edit the sonar script file.
+
+# sudo nano /opt/sonarqube/bin/linux-x86-64/sonar.sh
+# a) Add the following line
+
+# RUN_AS_USER=ddsonar
+
 # Set up SonarQube as a service
 echo -e "[Unit]
 Description=SonarQube service
@@ -158,10 +164,10 @@ sudo apt install certbot python3-certbot-nginx -y
 sudo tee /etc/nginx/sites-available/sonarqube.conf > /dev/null <<EOL
 server {
     listen 80;
-    server_name sonarqube.dominionsystem.org;
+    server_name sonarqube.evolutionsystems.net;
 
     location / {
-        proxy_pass http://localhost:8080;
+        proxy_pass http://localhost:9000;
         proxy_set_header Host \$host;
         proxy_set_header X-Real-IP \$remote_addr;
         proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
@@ -180,7 +186,7 @@ sudo nginx -t
 sudo systemctl reload nginx
 
 # Obtain an SSL certificate using Certbot and configure Nginx
-sudo certbot --nginx -d sonarqube.dominionsystem.org --email fusisoft@gmail.com --non-interactive --agree-tos --redirect
+sudo certbot --nginx -d sonarqube.evolutionsystems.net --email eric.tadah88t@gmail.com --non-interactive --agree-tos --redirect
 
 # Setup a cron job to automatically renew the certificate
 echo "0 0 * * * /usr/bin/certbot renew --quiet" | sudo tee -a /etc/crontab > /dev/null
@@ -188,7 +194,7 @@ echo "0 0 * * * /usr/bin/certbot renew --quiet" | sudo tee -a /etc/crontab > /de
 # Restart Nginx to apply SSL configuration
 sudo systemctl restart nginx
 
-echo "sonarqube is now accessible via https://sonarqube.dominionsystem.org"
+echo "sonarqube is now accessible via https://sonarqube.evolutionsystems.net"
 
 
 

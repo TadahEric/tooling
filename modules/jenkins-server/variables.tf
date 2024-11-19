@@ -21,7 +21,9 @@ variable "main-region" {
   type        = string
   default     = "us-west-2"
 }
+
 variable "security_group_id" {
-  type = list("")
+  type = list("string")
   default = ["sg-08832623feec1c320"]
 }
+
