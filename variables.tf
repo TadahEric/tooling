@@ -22,7 +22,7 @@ variable "key_name" {
 ##########################
 variable "security_group_id" {
   type    = string
-  default = "sg-07b8b3043804ede33"
+  default = "sg-08832623feec1c320"
 }
 variable "db_name" {
   description = "The name of the PostgreSQL database"
@@ -48,19 +48,14 @@ variable "db_password" {
 #   default = "subnet-036b6ddb502f8eb8a"
 # }
 
-# variable "security_group_id" {
-#   description = "The security group ID to attach to the instance"
-#   type        = string
-
-# }
 ##################
 #sonarqube db 
-###################
-variable "subnet_id" {
-  description = "The subnet ID where the instance will be deployed"
-  type        = string
-  default     = "subnet-0ea3d234fba84eef9"
-}
+# ###################
+# variable "subnet_id" {
+#   description = "The subnet ID where the instance will be deployed"
+#   type        = string
+#   default     = "subnet-05da27f028b909fe0"
+# }
 
 
 # variable "db_security_group_id" {

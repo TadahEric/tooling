@@ -23,7 +23,7 @@ variable "main-region" {
 }
 
 variable "security_group_id" {
-  type = list("string")
+  type = list(string)
   default = ["sg-08832623feec1c320"]
 }
 
