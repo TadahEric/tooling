@@ -58,11 +58,25 @@ sudo chmod +x /opt/sonarqube/bin/linux-x86-64/sonar.sh
 
 # Create sonarqube group and user if not exists
 if ! getent group ddsonar > /dev/null; then
-    sudo groupadd ddsonar
+    if sudo groupadd ddsonar; then
+        echo "Group 'ddsonar' created successfully."
+    else
+        echo "Failed to create group 'ddsonar'."
+        exit 1
+    fi
+else
+    echo "Group 'ddsonar' already exists."
 fi
 
 if ! id -u ddsonar > /dev/null 2>&1; then
-    sudo useradd -g ddsonar ddsonar
+    if sudo useradd -g ddsonar ddsonar; then
+        echo "User 'ddsonar' created and assigned to group 'ddsonar'."
+    else
+        echo "Failed to create user 'ddsonar'."
+        exit 1
+    fi
+else
+    echo "User 'ddsonar' already exists."
 fi
 
 sudo chown -R ddsonar:ddsonar /opt/sonarqube
@@ -194,7 +208,7 @@ echo "0 0 * * * /usr/bin/certbot renew --quiet" | sudo tee -a /etc/crontab > /de
 # Restart Nginx to apply SSL configuration
 sudo systemctl restart nginx
 
-echo "sonarqube is now accessible via https://sonarqube.evolutionsystems.net"
+echo "sonarqube is now accessible via https://sonarqu:be.evolutionsystems.net"
 
 
 
